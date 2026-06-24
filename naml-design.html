@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naml Design — Graphic Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B2980;
+    --navy-deep: #0F1A5C;
+    --cyan: #17C4E0;
+    --cyan-light: #6DDFF0;
+    --gold: #F8C316;
+    --white: #FAFBFF;
+    --muted: #8892B8;
+    --surface: #F0F3FF;
+    --card: #FFFFFF;
+    --text: #0D1340;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(250,251,255,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(27,41,128,0.08);
+    transition: padding 0.3s;
+  }
+  nav.scrolled { padding: 14px 60px; }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo img { height: 36px; width: 36px; object-fit: contain; }
+  .nav-logo-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800; font-size: 1.15rem;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo-text span { color: var(--cyan); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.875rem; font-weight: 500;
+    color: var(--navy); opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--navy);
+    color: #fff !important; opacity: 1 !important;
+    padding: 10px 22px; border-radius: 100px;
+    font-size: 0.875rem !important; font-weight: 600 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--navy-deep) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 60px 80px;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(23,196,224,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 50% at 20% 80%, rgba(27,41,128,0.06) 0%, transparent 60%);
+  }
+
+  .hero-dot-grid {
+    position: absolute; top: 80px; right: 0; width: 50%; height: 100%; z-index: 0;
+    background-image: radial-gradient(circle, rgba(27,41,128,0.12) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 30%, transparent 80%);
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--cyan);
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+  }
+
+  .hero-headline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 800; line-height: 1.08;
+    letter-spacing: -0.03em; color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .hero-headline .accent { color: var(--cyan); }
+  .hero-headline .underline-gold {
+    position: relative; display: inline-block;
+  }
+  .hero-headline .underline-gold::after {
+    content: '';
+    position: absolute; bottom: 4px; left: 0; right: 0;
+    height: 6px; background: var(--gold); opacity: 0.35;
+    border-radius: 2px; z-index: -1;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.7; color: var(--muted);
+    max-width: 440px; margin-bottom: 44px;
+  }
+
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--navy); color: #fff;
+    padding: 15px 30px; border-radius: 100px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; font-size: 0.9rem;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--navy-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(27,41,128,0.25);
+  }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--navy);
+    padding: 14px 28px; border-radius: 100px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; border: 2px solid rgba(27,41,128,0.2); cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover {
+    border-color: var(--navy); background: rgba(27,41,128,0.04);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    padding-top: 40px; border-top: 1px solid rgba(27,41,128,0.1);
+  }
+  .stat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.8rem; font-weight: 800; color: var(--navy);
+  }
+  .stat-num span { color: var(--gold); }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+  /* Hero Visual */
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; align-items: center;
+  }
+
+  .hero-logo-stage {
+    position: relative; width: 380px; height: 380px;
+  }
+
+  .logo-ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 1.5px solid rgba(27,41,128,0.1);
+    animation: spin-slow 25s linear infinite;
+  }
+  .logo-ring::before {
+    content: '';
+    position: absolute; top: -4px; left: 50%;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); transform: translateX(-50%);
+  }
+  .logo-ring-2 {
+    position: absolute; inset: 30px; border-radius: 50%;
+    border: 1px dashed rgba(23,196,224,0.25);
+    animation: spin-slow 18s linear infinite reverse;
+  }
+
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+
+  .logo-center {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-center img {
+    width: 200px; height: 200px; object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(27,41,128,0.18));
+  }
+
+  .floating-tag {
+    position: absolute;
+    background: var(--card); border-radius: 14px;
+    padding: 12px 18px;
+    box-shadow: 0 8px 32px rgba(27,41,128,0.12);
+    font-size: 0.78rem; font-weight: 600; color: var(--navy);
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+  }
+  .floating-tag .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .tag-1 { top: 20px; left: -20px; animation: float 4s ease-in-out infinite; }
+  .tag-2 { bottom: 60px; right: -30px; animation: float 4s ease-in-out infinite 1.5s; }
+  .tag-3 { bottom: 10px; left: 10px; animation: float 4s ease-in-out infinite 3s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 60px; }
+
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--cyan);
+    margin-bottom: 16px;
+  }
+  .section-eyebrow::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    color: var(--navy); line-height: 1.15;
+  }
+
+  /* ── SERVICES ── */
+  .services { background: var(--surface); }
+
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 60px; flex-wrap: wrap; gap: 20px;
+  }
+  .services-desc {
+    font-size: 1rem; color: var(--muted); max-width: 360px;
+    line-height: 1.7; margin-top: 12px;
+  }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+
+  .service-card {
+    background: var(--card); border-radius: 20px;
+    padding: 36px 32px;
+    border: 1px solid rgba(27,41,128,0.06);
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--navy), var(--cyan));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(27,41,128,0.1); }
+  .service-card:hover::after { transform: scaleX(1); }
+
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px; font-size: 1.4rem;
+  }
+  .service-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .service-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── PORTFOLIO ── */
+  .portfolio-header {
+    text-align: center; margin-bottom: 60px;
+  }
+
+  .portfolio-filters {
+    display: flex; justify-content: center; gap: 8px;
+    margin-bottom: 48px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 20px; border-radius: 100px;
+    font-size: 0.82rem; font-weight: 600;
+    border: 1.5px solid rgba(27,41,128,0.15);
+    background: transparent; color: var(--navy);
+    cursor: pointer; transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--navy); color: #fff; border-color: var(--navy);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+  }
+
+  .portfolio-item {
+    border-radius: 18px; overflow: hidden; position: relative;
+    cursor: pointer; background: var(--surface);
+    aspect-ratio: 4/3;
+    transition: transform 0.3s;
+  }
+  .portfolio-item:hover { transform: scale(0.98); }
+  .portfolio-item.tall { grid-row: span 2; aspect-ratio: auto; min-height: 400px; }
+  .portfolio-item.wide { grid-column: span 2; aspect-ratio: 2/1; }
+
+  .portfolio-thumb {
+    width: 100%; height: 100%; position: relative; overflow: hidden;
+  }
+  .portfolio-thumb-bg {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    transition: transform 0.4s;
+  }
+  .portfolio-item:hover .portfolio-thumb-bg { transform: scale(1.05); }
+
+  .portfolio-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,26,92,0.88) 0%, transparent 55%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 24px;
+  }
+  .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+  .portfolio-overlay h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px;
+  }
+  .portfolio-overlay p { font-size: 0.78rem; color: rgba(255,255,255,0.7); }
+
+  .portfolio-tag {
+    position: absolute; top: 14px; left: 14px;
+    background: rgba(250,251,255,0.9); backdrop-filter: blur(8px);
+    border-radius: 100px; padding: 4px 12px;
+    font-size: 0.7rem; font-weight: 600; color: var(--navy);
+  }
+
+  /* ── PROCESS ── */
+  .process { background: var(--navy); color: #fff; }
+  .process .section-eyebrow { color: var(--cyan-light); }
+  .process .section-title { color: #fff; }
+
+  .process-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    margin-top: 60px; position: relative;
+  }
+  .process-grid::before {
+    content: '';
+    position: absolute; top: 26px; left: 60px; right: 60px; height: 1px;
+    background: rgba(255,255,255,0.12);
+  }
+
+  .process-step { padding: 0 24px; text-align: center; position: relative; }
+  .process-num {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 800; color: var(--gold);
+    position: relative; z-index: 1;
+  }
+  .process-step-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem; font-weight: 700; margin-bottom: 10px;
+  }
+  .process-step-desc { font-size: 0.845rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+  /* ── STORE ── */
+  .store-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 48px; flex-wrap: wrap; gap: 20px;
+  }
+
+  .store-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  }
+
+  .product-card {
+    background: var(--card); border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(27,41,128,0.07);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(27,41,128,0.1); }
+
+  .product-img {
+    aspect-ratio: 1; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; position: relative;
+  }
+  .product-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--gold); color: var(--navy-deep);
+    font-size: 0.65rem; font-weight: 800; letter-spacing: 0.06em;
+    padding: 4px 10px; border-radius: 100px; text-transform: uppercase;
+  }
+
+  .product-info { padding: 20px; }
+  .product-cat {
+    font-size: 0.7rem; font-weight: 600; color: var(--cyan);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .product-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 14px; line-height: 1.3;
+  }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: var(--navy);
+  }
+  .product-price .old {
+    font-size: 0.78rem; color: var(--muted);
+    text-decoration: line-through; font-weight: 400;
+    margin-left: 6px;
+  }
+
+  .btn-cart {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    border: none; cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-cart:hover { background: var(--cyan); transform: scale(1.1); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--surface); }
+  .testimonials-header { text-align: center; margin-bottom: 56px; }
+
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+
+  .testi-card {
+    background: var(--card); border-radius: 20px; padding: 32px;
+    border: 1px solid rgba(27,41,128,0.06);
+    position: relative;
+  }
+  .testi-quote {
+    font-size: 2.5rem; line-height: 1;
+    color: var(--cyan); font-family: Georgia, serif;
+    margin-bottom: 16px;
+  }
+  .testi-text {
+    font-size: 0.9rem; color: var(--text); line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 800; color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    flex-shrink: 0;
+  }
+  .testi-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+  .testi-role { font-size: 0.75rem; color: var(--muted); }
+
+  .testi-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 16px; }
+
+  /* ── CONTACT CTA ── */
+  .contact-cta {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 60%, #1a4a8f 100%);
+    color: #fff; text-align: center; padding: 100px 60px;
+    position: relative; overflow: hidden;
+  }
+  .contact-cta-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 50% 80% at 50% 50%, rgba(23,196,224,0.12) 0%, transparent 70%);
+  }
+  .contact-cta h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    margin-bottom: 20px; position: relative;
+  }
+  .contact-cta p {
+    font-size: 1rem; color: rgba(255,255,255,0.65);
+    max-width: 460px; margin: 0 auto 40px; line-height: 1.7;
+    position: relative;
+  }
+  .contact-cta-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; position: relative; }
+
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; color: var(--navy);
+    padding: 15px 32px; border-radius: 100px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; font-size: 0.9rem; text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.2); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: #fff;
+    padding: 14px 30px; border-radius: 100px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600; font-size: 0.9rem; text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.07); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy-deep); color: rgba(255,255,255,0.55);
+    padding: 64px 60px 32px;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 32px;
+  }
+  .footer-brand { }
+  .footer-logo {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+  }
+  .footer-logo img { height: 32px; filter: brightness(0) invert(1); opacity: 0.9; }
+  .footer-logo-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: #fff;
+  }
+  .footer-tagline { font-size: 0.85rem; line-height: 1.65; max-width: 240px; }
+  .footer-socials { display: flex; gap: 10px; margin-top: 24px; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; color: rgba(255,255,255,0.6);
+    text-decoration: none; transition: background 0.2s;
+  }
+  .social-btn:hover { background: var(--cyan); color: #fff; }
+
+  .footer-col h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 700; color: #fff;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul a {
+    text-decoration: none; font-size: 0.855rem;
+    color: rgba(255,255,255,0.5); transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--cyan); }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom span { display: flex; align-items: center; gap: 6px; }
+  .footer-bottom .dot-gold { color: var(--gold); }
+
+  /* ── CART PANEL ── */
+  .cart-overlay {
+    position: fixed; inset: 0; background: rgba(13,19,64,0.5);
+    z-index: 200; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+  .cart-panel {
+    position: fixed; right: 0; top: 0; bottom: 0; width: 380px;
+    background: var(--white); z-index: 201;
+    transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+  }
+  .cart-panel.open { transform: translateX(0); }
+
+  .cart-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 28px; border-bottom: 1px solid rgba(27,41,128,0.08);
+  }
+  .cart-head h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: var(--navy);
+  }
+  .cart-close {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: none; background: var(--surface); cursor: pointer;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    color: var(--navy); transition: background 0.2s;
+  }
+  .cart-close:hover { background: rgba(27,41,128,0.1); }
+
+  .cart-items { flex: 1; overflow-y: auto; padding: 20px 28px; }
+  .cart-item {
+    display: flex; gap: 14px; margin-bottom: 20px;
+    padding-bottom: 20px; border-bottom: 1px solid rgba(27,41,128,0.06);
+  }
+  .cart-item-thumb {
+    width: 64px; height: 64px; border-radius: 12px;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .cart-item-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.875rem; font-weight: 700; color: var(--navy); margin-bottom: 4px;
+  }
+  .cart-item-price { font-size: 0.85rem; color: var(--muted); }
+  .cart-item-remove {
+    margin-left: auto; font-size: 0.75rem; color: var(--muted);
+    background: none; border: none; cursor: pointer; align-self: flex-start;
+    transition: color 0.2s;
+  }
+  .cart-item-remove:hover { color: #e74c3c; }
+
+  .cart-empty {
+    text-align: center; padding: 60px 20px;
+    color: var(--muted); font-size: 0.9rem;
+  }
+  .cart-empty-icon { font-size: 3rem; margin-bottom: 16px; }
+
+  .cart-foot {
+    padding: 24px 28px; border-top: 1px solid rgba(27,41,128,0.08);
+  }
+  .cart-total {
+    display: flex; justify-content: space-between;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; font-size: 1rem; color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .btn-checkout {
+    width: 100%; padding: 15px; border-radius: 14px;
+    background: var(--navy); color: #fff; border: none; cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+  .btn-checkout:hover { background: var(--navy-deep); }
+
+  /* Cart bubble */
+  .cart-trigger {
+    position: fixed; bottom: 32px; right: 32px; z-index: 99;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--navy); color: #fff; border: none; cursor: pointer;
+    font-size: 1.3rem;
+    box-shadow: 0 8px 24px rgba(27,41,128,0.3);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cart-trigger:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(27,41,128,0.4); }
+  .cart-badge {
+    position: absolute; top: -4px; right: -4px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--gold); color: var(--navy-deep);
+    font-size: 0.65rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    display: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 18px 32px; }
+    section { padding: 80px 32px; }
+    .hero { padding: 100px 32px 60px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .store-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .process-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .process-grid::before { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 64px 20px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 20px 60px; text-align: center; gap: 48px; }
+    .hero-sub { margin: 0 auto 44px; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; gap: 24px; }
+    .hero-visual { order: -1; }
+    .hero-logo-stage { width: 260px; height: 260px; }
+    .logo-center img { width: 140px; height: 140px; }
+    .tag-2 { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .portfolio-item.wide { grid-column: span 1; aspect-ratio: 4/3; }
+    .portfolio-item.tall { grid-row: span 1; min-height: 200px; }
+    .store-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .contact-cta { padding: 64px 20px; }
+    footer { padding: 48px 20px 24px; }
+    .cart-panel { width: 100%; }
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.45s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="Test1.png" alt="Naml Design Logo">
+    <span class="nav-logo-text">Naml <span>Design</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#store">Store</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-dot-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up">Graphic Design Studio</div>
+    <h1 class="hero-headline fade-up delay-1">
+      Design that <br>
+      <span class="underline-gold">speaks</span> louder<br>
+      than <span class="accent">words.</span>
+    </h1>
+    <p class="hero-sub fade-up delay-2">
+      We craft bold visual identities, digital assets, and creative solutions that make your brand impossible to ignore.
+    </p>
+    <div class="hero-actions fade-up delay-3">
+      <a href="#portfolio" class="btn-primary">View Our Work →</a>
+      <a href="#store" class="btn-outline">Browse Store</a>
+    </div>
+    <div class="hero-stats fade-up delay-4">
+      <div>
+        <div class="stat-num">120<span>+</span></div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div>
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div>
+        <div class="stat-num">6<span>+</span></div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-logo-stage">
+      <div class="logo-ring"></div>
+      <div class="logo-ring-2"></div>
+      <div class="logo-center">
+        <img src="Test1.png" alt="Naml Design">
+      </div>
+      <div class="floating-tag tag-1">
+        <div class="dot" style="background:var(--gold)"></div>
+        Brand Identity
+      </div>
+      <div class="floating-tag tag-2">
+        <div class="dot" style="background:var(--cyan)"></div>
+        UI/UX Design
+      </div>
+      <div class="floating-tag tag-3">
+        <div class="dot" style="background:var(--navy)"></div>
+        ✦ Available Now
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-eyebrow">What We Do</div>
+      <h2 class="section-title">Creative services<br>built for impact</h2>
+      <p class="services-desc">From brand identity to digital assets — every pixel is intentional.</p>
+    </div>
+    <a href="#contact" class="btn-primary">Get a Quote →</a>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <div class="service-title">Brand Identity</div>
+      <p class="service-desc">Logo design, color systems, typography, and brand guidelines that make you memorable across every touchpoint.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-title">UI/UX Design</div>
+      <p class="service-desc">Intuitive, beautiful digital interfaces for apps and websites — where aesthetics meet functionality.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📦</div>
+      <div class="service-title">Packaging Design</div>
+      <p class="service-desc">Product packaging that stands out on the shelf and communicates your brand story at first glance.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📐</div>
+      <div class="service-title">Print & Editorial</div>
+      <p class="service-desc">Brochures, magazines, posters, and marketing collateral designed with precision and purpose.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✦</div>
+      <div class="service-title">Motion Graphics</div>
+      <p class="service-desc">Animated logos, social media reels, and video graphics that bring your brand to life in motion.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛍️</div>
+      <div class="service-title">Social Media Design</div>
+      <p class="service-desc">Scroll-stopping templates, content systems, and visual strategies tailored for your platforms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="portfolio-header">
+    <div class="section-eyebrow">Our Work</div>
+    <h2 class="section-title">Selected Projects</h2>
+  </div>
+
+  <div class="portfolio-filters">
+    <button class="filter-btn active" onclick="filterPortfolio(this,'all')">All</button>
+    <button class="filter-btn" onclick="filterPortfolio(this,'branding')">Branding</button>
+    <button class="filter-btn" onclick="filterPortfolio(this,'ui')">UI/UX</button>
+    <button class="filter-btn" onclick="filterPortfolio(this,'print')">Print</button>
+    <button class="filter-btn" onclick="filterPortfolio(this,'social')">Social</button>
+  </div>
+
+  <div class="portfolio-grid">
+    <div class="portfolio-item tall" data-cat="branding">
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#1B2980,#17C4E0); flex-direction:column; gap:16px;">
+          <div style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:2.5rem">🏷️</div>
+          <div style="color:rgba(255,255,255,0.8);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:0.05em">LUXE BRAND CO</div>
+        </div>
+      </div>
+      <div class="portfolio-overlay">
+        <h3>Luxe Brand Identity</h3>
+        <p>Brand Strategy · Visual Identity</p>
+      </div>
+      <div class="portfolio-tag">Branding</div>
+    </div>
+
+    <div class="portfolio-item" data-cat="ui">
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#0F1A5C,#1B2980); flex-direction:column; gap:12px; padding:20px;">
+          <div style="width:100%;background:rgba(23,196,224,0.15);border-radius:10px;padding:12px;display:flex;gap:8px;align-items:center">
+            <div style="width:8px;height:8px;border-radius:50%;background:#F5A623"></div>
+            <div style="flex:1;height:6px;background:rgba(255,255,255,0.2);border-radius:3px"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%">
+            <div style="background:rgba(23,196,224,0.2);border-radius:8px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:1.8rem">📊</div>
+            <div style="background:rgba(255,255,255,0.08);border-radius:8px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:1.8rem">📈</div>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-overlay">
+        <h3>FinTrack Dashboard</h3>
+        <p>UI Design · Web App</p>
+      </div>
+      <div class="portfolio-tag">UI/UX</div>
+    </div>
+
+    <div class="portfolio-item" data-cat="social">
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#F5A623,#f7c055); flex-direction:column; gap:10px; padding:24px;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.6rem;font-weight:800;color:#0F1A5C;text-align:center;line-height:1.1">SUMMER<br>SALE</div>
+          <div style="background:#0F1A5C;color:#F5A623;font-size:0.7rem;font-weight:800;padding:6px 14px;border-radius:100px;letter-spacing:0.1em">50% OFF</div>
+        </div>
+      </div>
+      <div class="portfolio-overlay">
+        <h3>Summer Campaign</h3>
+        <p>Social Media · Copywriting</p>
+      </div>
+      <div class="portfolio-tag">Social</div>
+    </div>
+
+    <div class="portfolio-item wide" data-cat="print">
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#f8f9fc,#e8ecf7); flex-direction:row; gap:24px; padding:32px; justify-content:center;">
+          <div style="width:90px;background:#fff;border-radius:8px;box-shadow:0 4px 20px rgba(27,41,128,0.12);display:flex;align-items:center;justify-content:center;padding:12px;aspect-ratio:0.7">
+            <div style="text-align:center">
+              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.6rem;font-weight:800;color:#1B2980;letter-spacing:0.06em">ANNUAL<br>REPORT</div>
+              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1B2980,#17C4E0);margin:8px auto;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem">📋</div>
+            </div>
+          </div>
+          <div style="width:90px;background:#1B2980;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:12px;aspect-ratio:0.7">
+            <div style="text-align:center">
+              <div style="font-size:1.5rem">📰</div>
+              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.55rem;font-weight:700;color:rgba(255,255,255,0.8);margin-top:6px;letter-spacing:0.05em">MAGAZINE</div>
+            </div>
+          </div>
+          <div style="width:90px;background:#fff;border-radius:8px;box-shadow:0 4px 20px rgba(27,41,128,0.12);display:flex;align-items:center;justify-content:center;padding:12px;aspect-ratio:0.7">
+            <div style="text-align:center">
+              <div style="font-size:1.5rem">📁</div>
+              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.55rem;font-weight:700;color:#1B2980;margin-top:6px;letter-spacing:0.05em">BROCHURE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-overlay">
+        <h3>Print Collection 2024</h3>
+        <p>Editorial · Print Design</p>
+      </div>
+      <div class="portfolio-tag">Print</div>
+    </div>
+
+    <div class="portfolio-item" data-cat="branding">
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#17C4E0,#6DDFF0); flex-direction:column; gap:12px;">
+          <div style="width:64px;height:64px;border-radius:16px;background:rgba(27,41,128,0.2);display:flex;align-items:center;justify-content:center;font-size:2rem">☕</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;font-weight:800;color:#0F1A5C;letter-spacing:0.06em">BLOOM CAFÉ</div>
+        </div>
+      </div>
+      <div class="portfolio-overlay">
+        <h3>Bloom Café Rebrand</h3>
+        <p>Logo Design · Brand System</p>
+      </div>
+      <div class="portfolio-tag">Branding</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="about">
+  <div style="text-align:center;margin-bottom:20px">
+    <div class="section-eyebrow">How We Work</div>
+    <h2 class="section-title">Our creative process</h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="process-num">01</div>
+      <div class="process-step-title">Discover</div>
+      <p class="process-step-desc">We start by understanding your brand, audience, and goals through a deep-dive strategy session.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">02</div>
+      <div class="process-step-title">Concept</div>
+      <p class="process-step-desc">Mood boards, sketches, and initial directions — we explore multiple creative paths before committing.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">03</div>
+      <div class="process-step-title">Design</div>
+      <p class="process-step-desc">Pixel-perfect execution with attention to every detail, refined through rounds of collaborative feedback.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">04</div>
+      <div class="process-step-title">Deliver</div>
+      <p class="process-step-desc">Final files in all formats, brand guides, and ongoing support to ensure seamless implementation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STORE -->
+<section id="store">
+  <div class="store-header">
+    <div>
+      <div class="section-eyebrow">Digital Store</div>
+      <h2 class="section-title">Ready-to-use<br>design assets</h2>
+    </div>
+    <a href="#" class="btn-outline">View All Products →</a>
+  </div>
+
+  <div class="store-grid">
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#f0f3ff,#e2e9ff)">
+        🎨
+        <div class="product-badge">Best Seller</div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Brand Kit</div>
+        <div class="product-name">Complete Logo Pack — 25 Editable Templates</div>
+        <div class="product-footer">
+          <div class="product-price">$29 <span class="old">$49</span></div>
+          <button class="btn-cart" onclick="addToCart('Complete Logo Pack', 29, '🎨')">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#e8f8fc,#cdf0f7)">
+        📱
+      </div>
+      <div class="product-info">
+        <div class="product-cat">UI Kit</div>
+        <div class="product-name">Mobile App UI Kit — 200+ Components</div>
+        <div class="product-footer">
+          <div class="product-price">$49</div>
+          <button class="btn-cart" onclick="addToCart('Mobile App UI Kit', 49, '📱')">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#fff8ec,#fdefc7)">
+        📸
+        <div class="product-badge">New</div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Social Media</div>
+        <div class="product-name">Instagram Story Templates — 60 Designs</div>
+        <div class="product-footer">
+          <div class="product-price">$19 <span class="old">$35</span></div>
+          <button class="btn-cart" onclick="addToCart('Instagram Story Templates', 19, '📸')">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#f0f3ff,#dfe6ff)">
+        📐
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Print</div>
+        <div class="product-name">Business Card Bundle — 20 Premium Styles</div>
+        <div class="product-footer">
+          <div class="product-price">$15</div>
+          <button class="btn-cart" onclick="addToCart('Business Card Bundle', 15, '📐')">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header">
+    <div class="section-eyebrow">Client Love</div>
+    <h2 class="section-title">What clients say</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Naml Design transformed our brand completely. The logo they created is instantly recognizable, and the brand guidelines made rolling everything out effortless. Truly world-class work.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#1B2980,#17C4E0)">S</div>
+        <div>
+          <div class="testi-name">Sarah Mitchell</div>
+          <div class="testi-role">Founder, Bloom Café</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">The UI kit we purchased saved us weeks of work. Every component is polished, pixel-perfect, and the Figma file is incredibly well organized. Worth every penny and more.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#F5A623,#f7c055)">A</div>
+        <div>
+          <div class="testi-name">Ahmed Al-Farsi</div>
+          <div class="testi-role">Product Manager, TechNova</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Fast, professional, and genuinely creative. Naml Design listened to what we needed and delivered something even better than what we imagined. Our social media has never looked better.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#17C4E0,#6DDFF0)">L</div>
+        <div>
+          <div class="testi-name">Lena Hoffmann</div>
+          <div class="testi-role">Marketing Director, Luxe Co.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT CTA -->
+<section class="contact-cta" id="contact">
+  <div class="contact-cta-bg"></div>
+  <div class="section-eyebrow" style="justify-content:center;color:rgba(255,255,255,0.6)">Start a Project</div>
+  <h2>Ready to create<br>something <span style="color:var(--gold)">unforgettable?</span></h2>
+  <p>Let's build something together. Whether it's a full rebrand or a single asset — we're here to make it exceptional.</p>
+  <div class="contact-cta-actions">
+    <a href="mailto:namldesign93@gmail.com" class="btn-white">✉ namldesign93@gmail.com</a>
+    <a href="#" class="btn-ghost">Schedule a Call →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="Test1.png" alt="Naml Design">
+        <span class="footer-logo-name">Naml Design</span>
+      </div>
+      <p class="footer-tagline">A graphic design studio crafting bold identities and digital assets that leave a mark.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">Be</a>
+        <a href="#" class="social-btn">◎</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Brand Identity</a></li>
+        <li><a href="#">UI/UX Design</a></li>
+        <li><a href="#">Packaging</a></li>
+        <li><a href="#">Motion Graphics</a></li>
+        <li><a href="#">Print Design</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Work</a></li>
+        <li><a href="#">Process</a></li>
+        <li><a href="#">Store</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">License</a></li>
+        <li><a href="#">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Naml Design. All rights reserved.</span>
+    <span>Made with <span class="dot-gold">❤ </span> and precision.</span>
+  </div>
+</footer>
+
+<!-- CART TRIGGER -->
+<button class="cart-trigger" onclick="toggleCart()">
+  🛒
+  <span class="cart-badge" id="cartBadge">0</span>
+</button>
+
+<!-- CART PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-head">
+    <h2>Your Cart</h2>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Your cart is empty.<br>Browse the store to add items.</p>
+    </div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0</span>
+    </div>
+    <button class="btn-checkout">Checkout →</button>
+  </div>
+</div>
+
+<script>
+  // Nav scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Portfolio filter
+  function filterPortfolio(btn, cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.portfolio-item').forEach(item => {
+      const show = cat === 'all' || item.dataset.cat === cat;
+      item.style.opacity = show ? '1' : '0.25';
+      item.style.transform = show ? '' : 'scale(0.95)';
+      item.style.transition = 'opacity 0.3s, transform 0.3s';
+    });
+  }
+
+  // Cart
+  let cart = [];
+  let cartOpen = false;
+
+  function toggleCart() {
+    cartOpen = !cartOpen;
+    document.getElementById('cartPanel').classList.toggle('open', cartOpen);
+    document.getElementById('cartOverlay').classList.toggle('open', cartOpen);
+  }
+
+  function addToCart(name, price, icon) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) { existing.qty++; }
+    else { cart.push({ name, price, icon, qty: 1 }); }
+    renderCart();
+    if (!cartOpen) toggleCart();
+  }
+
+  function removeFromCart(name) {
+    cart = cart.filter(i => i.name !== name);
+    renderCart();
+  }
+
+  function renderCart() {
+    const container = document.getElementById('cartItems');
+    const footer = document.getElementById('cartFoot');
+    const badge = document.getElementById('cartBadge');
+    const totalEl = document.getElementById('cartTotal');
+
+    const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+    badge.textContent = totalQty;
+    badge.style.display = totalQty > 0 ? 'flex' : 'none';
+
+    if (cart.length === 0) {
+      container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Your cart is empty.<br>Browse the store to add items.</p></div>';
+      footer.style.display = 'none';
+      return;
+    }
+
+    footer.style.display = 'block';
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    totalEl.textContent = '$' + total;
+
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-thumb">${item.icon}</div>
+        <div>
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">$${item.price} × ${item.qty}</div>
+        </div>
+        <button class="cart-item-remove" onclick="removeFromCart('${item.name}')">Remove</button>
+      </div>
+    `).join('');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .product-card, .testi-card, .process-step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
